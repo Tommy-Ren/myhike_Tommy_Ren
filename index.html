@@ -33,8 +33,8 @@
     <!-------------------------------------------->
     <!-- Other libraries and styles of your own -->
     <!-------------------------------------------->
-    <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
-    <!-- <link rel="stylesheet" href="./styles/style.css"> -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/style.css">
 
 </head>
 
@@ -47,6 +47,11 @@
     <nav id="navbarPlaceholder"></nav>
 
     <!-- the body of your page goes here -->
+    <div class="container text-center">
+        <img class="d-block mx-auto mb-4" src="./images/elmo.jpg" alt="" width="200" height="200">
+        <h1>Welcome to Elmo's Hiking App</h1>
+        <a href="login.html" class="btn btn-info" role="button">Log in</a>
+    </div>
     <!-- stuff -->
 
     <!-- our own footer goes here-->
@@ -57,7 +62,10 @@
     <!---------------------------------------------->
     <script src="./scripts/firebaseAPI_TEAM99.js"></script>
     <script src="./scripts/skeleton.js"></script>
-    <!-- <script src="./scripts/script.js"></script> -->
+    <script src="./scripts/script.js"></script>
+    <script>
+        logout();       //make sure user is logged out
+    </script>
 
 </body>
 
