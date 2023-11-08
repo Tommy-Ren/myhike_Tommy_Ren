@@ -134,5 +134,4 @@ function displayCardsDynamically(collection) {
 insertNameFromFirestore();
 readQuote("tuesday");        //calling the function
 getNameFromAuth(); //run the function
-writeHikes();         //if you used method 1
 displayCardsDynamically("hikes");  //input param is the name of the collection
