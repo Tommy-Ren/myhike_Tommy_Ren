@@ -1,5 +1,5 @@
 //Global variable pointing to the current user's Firestore document
-var currentUser;  
+var currentUser;
 
 function getNameFromAuth() {
     firebase.auth().onAuthStateChanged(user => {
@@ -28,13 +28,13 @@ function getNameFromAuth() {
 // Input param is the String representing the day of the week, aka, the document name
 function readQuote(day) {
     db.collection("quotes").doc(day).onSnapshot(dayDoc => {                                                               //arrow notation
-           console.log("current document data: " + dayDoc.data());                          //.data() returns data object
-           document.getElementById("quote-goes-here").innerHTML = dayDoc.data().quote;      //using javascript to display the data on the right place
+        console.log("current document data: " + dayDoc.data());                          //.data() returns data object
+        document.getElementById("quote-goes-here").innerHTML = dayDoc.data().quote;      //using javascript to display the data on the right place
         //    Here are other ways to access key-value data fields
         //    $('#quote-goes-here').text(dayDoc.data().quote);         //using jquery object dot notation
         //    $("#quote-goes-here").text(dayDoc.data()["quote"]);      //using json object indexing
-		//    document.querySelector("#quote-goes-here").innerHTML = dayDoc.data().quote;
-      })
+        //    document.querySelector("#quote-goes-here").innerHTML = dayDoc.data().quote;
+    })
 }
 function insertNameFromFirestore() {
     // Check if the user is logged in:
@@ -64,7 +64,7 @@ function writeHikes() {
         city: "Burnaby",
         province: "BC",
         level: "easy",
-				details: "A lovely place for lunch walk",
+        details: "A lovely place for lunch walk",
         length: 10,          //number value
         hike_time: 60,       //number value
         lat: 49.2467097082573,
@@ -90,7 +90,7 @@ function writeHikes() {
         city: "North Vancouver",
         province: "BC",
         level: "hard",
-        details:  "Amazing ski slope views",
+        details: "Amazing ski slope views",
         length: 8.2,        //number value
         hike_time: 120,     //number value
         lat: 49.38847101455571,
@@ -102,22 +102,22 @@ function displayCardsDynamically(collection) {
     let cardTemplate = document.getElementById("hikeCardTemplate"); // Retrieve the HTML element with the ID "hikeCardTemplate" and store it in the cardTemplate variable. 
 
     db.collection(collection).get()   //the collection called "hikes"
-        .then(allHikes=> {
+        .then(allHikes => {
             var i = 1;  //Optional: if you want to have a unique ID for each hike
             allHikes.forEach(doc => { //iterate thru each doc
                 var title = doc.data().name;       // get value of the "name" key
                 var details = doc.data().details;  // get value of the "details" key
-								var hikeCode = doc.data().code;    //get unique ID to each hike to be used for fetching right image
+                var hikeCode = doc.data().code;    //get unique ID to each hike to be used for fetching right image
                 var hikeLength = doc.data().length; //gets the length field
                 var docID = doc.id;
                 let newcard = cardTemplate.content.cloneNode(true); // Clone the HTML template to create a new card (newcard) that will be filled with Firestore data.
 
                 //update title and text and image
                 newcard.querySelector('.card-title').innerHTML = title;
-                newcard.querySelector('.card-length').innerHTML = hikeLength +"km";
+                newcard.querySelector('.card-length').innerHTML = hikeLength + "km";
                 newcard.querySelector('.card-text').innerHTML = details;
                 newcard.querySelector('.card-image').src = `./images/${hikeCode}.jpg`; //Example: NV01.jpg
-                newcard.querySelector('a').href = "eachHike.html?docID="+docID;
+                newcard.querySelector('a').href = "eachHike.html?docID=" + docID;
 
                 // lab 11
                 newcard.querySelector('i').id = 'save-' + docID;
@@ -148,20 +148,20 @@ function displayCardsDynamically(collection) {
 function saveBookmark(hikeDocID) {
     // Manage the backend process to store the hikeDocID in the database, recording which hike was bookmarked by the user.
     currentUser.update({
-                    // Use 'arrayUnion' to add the new bookmark ID to the 'bookmarks' array.
-            // This method ensures that the ID is added only if it's not already present, preventing duplicates.
+        // Use 'arrayUnion' to add the new bookmark ID to the 'bookmarks' array.
+        // This method ensures that the ID is added only if it's not already present, preventing duplicates.
         bookmarks: firebase.firestore.FieldValue.arrayUnion(hikeDocID)
     })
-            // Handle the front-end update to change the icon, providing visual feedback to the user that it has been clicked.
-    .then(function () {
-        console.log("bookmark has been saved for" + hikeDocID);
-        var iconID = 'save-' + hikeDocID;
-        //console.log(iconID);
-                    //this is to change the icon of the hike that was saved to "filled"
-        document.getElementById(iconID).innerText = 'bookmark';
-    });
+        // Handle the front-end update to change the icon, providing visual feedback to the user that it has been clicked.
+        .then(function () {
+            console.log("bookmark has been saved for" + hikeDocID);
+            var iconID = 'save-' + hikeDocID;
+            //console.log(iconID);
+            //this is to change the icon of the hike that was saved to "filled"
+            document.getElementById(iconID).innerText = 'bookmark';
+        });
 }
- 
+
 
 //Function that calls everything needed for the main page  
 function doAll() {
